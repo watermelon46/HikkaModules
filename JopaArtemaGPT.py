@@ -1,5 +1,5 @@
 # meta developer: @holinimmeta
-__version__ = (1, 2)
+__version__ = (1, 2,1)
 import logging
 import asyncio
 import random
@@ -16,6 +16,7 @@ def generate():
         Генерация мешанины
         """
         global answer
+        answer=""
         for i in range(1,random.randint(20,250)):
         	if random.randint(1,20)==5:
         		answer=answer+emojibase[random.randint(0,len(emojibase)-1)]
