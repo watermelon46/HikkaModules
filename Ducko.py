@@ -50,7 +50,7 @@ class Ducko(loader.Module):
         if query:
             await message.edit("<b><emoji document_id=5188311512791393083>🔎</emoji> Ищем ответы на просторах поисковиков...</b>")
             getSearchUrls(query)
-            await message.edit(f'<b><emoji document_id=5325652987685642265>🔎</emoji> Результаты поиска по запросу "{query}":\n\n\n<a href="{duckurl}">🦆 DuckDuckGo</a>\n\n<a href="{yaurl}">🇷🇺 Яндекс</a>\n\n<a href="{googleurl}">🇺🇸 Google</a>\n\n<a href="{bingurl}">🇺🇸 Bing</a>\n\n<a href="{yahoourl}">🇺🇸 Yahoo</a>\n\n<a href="{wikiruurl}">📖🇷🇺 Wikipedia на русском</a>\n\n<a href="{wikienurl}">📖🇺🇸 Wikipedia на английском</a>')
+            await message.edit(f'<b><emoji document_id=5325652987685642265>🔎</emoji> Результаты поиска по запросу "{query}":</b>\n\n\n<a href="{duckurl}">🦆 DuckDuckGo</a>\n\n<a href="{yaurl}">🇷🇺 Яндекс</a>\n\n<a href="{googleurl}">🇺🇸 Google</a>\n\n<a href="{bingurl}">🇺🇸 Bing</a>\n\n<a href="{yahoourl}">🇺🇸 Yahoo</a>\n\n<a href="{wikiruurl}">📖🇷🇺 Wikipedia на русском</a>\n\n<a href="{wikienurl}">📖🇺🇸 Wikipedia на английском</a>')
         else:
             await message.edit(self.strings["error"])
     
