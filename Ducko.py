@@ -62,7 +62,7 @@ class Ducko(loader.Module):
         if query:
             await message.edit("<b><emoji document_id=5188311512791393083>🔎</emoji> Ищем ответы на просторах DuckDuckGo...</b>")
             getSearchUrls(query)
-            await message.edit(f'<a href="{yaurl}"><b><emoji document_id=5325652987685642265>🔎</emoji> Результаты поиска по запросу "{query}" в DuckDuckGo</a></b>')
+            await message.edit(f'<a href="{duckurl}"><b><emoji document_id=5325652987685642265>🔎</emoji> Результаты поиска по запросу "{query}" в DuckDuckGo</a></b>')
         else:
             await message.edit(self.strings["error"])
 
