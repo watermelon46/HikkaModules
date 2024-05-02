@@ -17,27 +17,23 @@ logger = logging.getLogger(__name__)
 
 def uptime_parse(): # code from https://github.com/Cairnarvon/uptime/blob/master/src/__main__.py
     up = uptime()
-
     if up is None:
         return "unable to determine"
+    parts = []
+    days, up = up // 86400, up % 86400
+    if days:
+        parts.append('%d day%s' % (days, 's' if days != 1 else ''))
 
-    if '-b' not in sys.argv:
-        parts = []
+    hours, up = up // 3600, up % 3600
+    if hours:
+        parts.append('%d hour%s' % (hours, 's' if hours != 1 else ''))
 
-        days, up = up // 86400, up % 86400
-        if days:
-            parts.append('%d day%s' % (days, 's' if days != 1 else ''))
+    minutes, up = up // 60, up % 60
+    if minutes:
+        parts.append('%d minute%s' % (minutes, 's' if minutes != 1 else ''))
 
-        hours, up = up // 3600, up % 3600
-        if hours:
-            parts.append('%d hour%s' % (hours, 's' if hours != 1 else ''))
-
-        minutes, up = up // 60, up % 60
-        if minutes:
-            parts.append('%d minute%s' % (minutes, 's' if minutes != 1 else ''))
-
-        if up or not parts:
-            parts.append('%.2f seconds' % up)
+    if up or not parts:
+        parts.append('%.2f seconds' % up)
             
     return "".join(parts)
 @loader.tds
