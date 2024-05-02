@@ -1,6 +1,6 @@
 # meta developer: @hlnmhikka
 # requires: psutil py-cpuinfo uptime
-__version__ = (1, 0)
+__version__ = (1, 1)
 
 import logging
 import asyncio
@@ -79,7 +79,7 @@ class wmfetch(loader.Module):
         except:
             cpucount = und
         try:
-            cpuload = psutil.cpu_percent()
+            cpuload = f"{psutil.cpu_percent()}%"
         except:
             cpuload = und
         # Fetch3 - getting info from cpuinfo
@@ -91,7 +91,7 @@ class wmfetch(loader.Module):
         # When everything is fetched, it's time to show output!
         await message.edit(f"""
         <b>🍉 wmfetch4hikka
-            
+        
         {username}@{pcname}
         -------------------
         OS:</b> {system}
@@ -99,10 +99,10 @@ class wmfetch(loader.Module):
         <b>Uptime:</b> {uptime}
         <b>CPU:</b> ({cpucount}) {cpuname} @ {cpuhz}
         <b>CPU arch:</b> {arch}
-        <b>CPU load:</b> {cpuload}%
+        <b>CPU load:</b> {cpuload}
         <b>RAM:</b> {ramused}MB / {ramtotal}MB ({rampercent}%)
         <b>Python:</b> {pyver}
         <b>Local IP:</b> {localip}
         
-        Fetched in {fetchedIn}
+        Fetched in {round(fetchedIn, 3)}s
         """)
