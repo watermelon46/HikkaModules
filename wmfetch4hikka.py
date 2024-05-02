@@ -10,30 +10,34 @@ import psutil
 from getpass import getuser
 from uptime import uptime
 from time import time
-import cpuinfo
 import socket
+import cpuinfo
+und = 'unable to determine'
 
 logger = logging.getLogger(__name__)
 
 def uptime_parse(): # code from https://github.com/Cairnarvon/uptime/blob/master/src/__main__.py
     up = uptime()
+
     if up is None:
-        return "unable to determine"
+        return und
+
     parts = []
+
     days, up = up // 86400, up % 86400
     if days:
         parts.append('%d day%s' % (days, 's' if days != 1 else ''))
 
     hours, up = up // 3600, up % 3600
     if hours:
-        parts.append('%d hour%s' % (hours, 's' if hours != 1 else ''))
+        parts.append(', %d hour%s' % (hours, 's' if hours != 1 else ''))
 
     minutes, up = up // 60, up % 60
     if minutes:
-        parts.append('%d minute%s' % (minutes, 's' if minutes != 1 else ''))
+        parts.append(', %d minute%s' % (minutes, 's' if minutes != 1 else ''))
 
     if up or not parts:
-        parts.append('%.2f seconds' % up)
+        parts.append(', %.2f seconds ' % up)
             
     return "".join(parts)
 @loader.tds
@@ -55,7 +59,10 @@ class wmfetch(loader.Module):
         # Fetch2 - getting info from micro
         username = getuser()
         uptime = uptime_parse()
-        localip=socket.gethostbyname(socket.gethostname())
+        try:
+            localip = socket.gethostbyname(socket.gethostname())
+        except:
+            localip = und
         # Fetch1 - getting info from uname()
         sysinfo = platform.uname()
         system = sysinfo[0]
@@ -67,8 +74,14 @@ class wmfetch(loader.Module):
         ramtotal = round(ramraw.total/1048576, 2)
         ramused = round(ramraw.used/1048576, 2)
         rampercent = ramraw.percent
-        cpucount = psutil.cpu_count()
-        cpuload = psutil.cpu_percent()
+        try:
+            cpucount = psutil.cpu_count()
+        except:
+            cpucount = und
+        try:
+            cpuload = psutil.cpu_percent()
+        except:
+            cpuload = und
         # Fetch3 - getting info from cpuinfo
         cpuraw = cpuinfo.get_cpu_info()
         pyver = cpuraw['python_version']
@@ -78,18 +91,18 @@ class wmfetch(loader.Module):
         # When everything is fetched, it's time to show output!
         await message.edit(f"""
         <b>🍉 wmfetch4hikka
-   
+            
         {username}@{pcname}
-        ————————————————
+        -------------------
         OS:</b> {system}
         <b>Kernel:</b> {release}
         <b>Uptime:</b> {uptime}
-        <b>CPU:</b> ({cpucount}) {cpuname}
+        <b>CPU:</b> ({cpucount}) {cpuname} @ {cpuhz}
         <b>CPU arch:</b> {arch}
         <b>CPU load:</b> {cpuload}%
-        <b>RAM:</b> {ramused}MB / {ramtotal}MB ({rampercent})
+        <b>RAM:</b> {ramused}MB / {ramtotal}MB ({rampercent}%)
         <b>Python:</b> {pyver}
         <b>Local IP:</b> {localip}
-            
-        Fetched in {round(fetchedIn, 5)}s
+        
+        Fetched in {fetchedIn}
         """)
