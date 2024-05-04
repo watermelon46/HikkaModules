@@ -97,7 +97,7 @@ class wmfetch(loader.Module):
         OS:</b> {system}
         <b>Kernel:</b> {release}
         <b>Uptime:</b> {uptime}
-        <b>CPU:</b> ({cpucount}) {cpuname} @ {cpuhz}
+        <b>CPU:</b> ({cpucount}) {cpuname}
         <b>CPU arch:</b> {arch}
         <b>CPU load:</b> {cpuload}
         <b>RAM:</b> {ramused}MB / {ramtotal}MB ({rampercent}%)
