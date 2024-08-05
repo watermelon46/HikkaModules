@@ -52,7 +52,7 @@ class lnmCrawler(loader.Module):
         try:
             await message.edit(f"<b><emoji document_id=5318783359294382499>😎</emoji> Сборщик {action}.</b>")
         except UnboundLocalError:
-            pa
+            pass
 
     async def lnmsetgroupcmd(self, message: Message):
         """назначить группу местом сбора сообщений"""
