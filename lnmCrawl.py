@@ -7,8 +7,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-logger.info("lnmCrawler service started")
-
 @loader.tds
 class lnmCrawler(loader.Module):
     """Модуль для сборки сообщений определенного человека."""
@@ -36,6 +34,8 @@ class lnmCrawler(loader.Module):
     
     crawlerEnabled = True
 
+    async def on_dlmod(self, client, db):
+        logger.info('lnmCrawl service started')
 
     async def lnmcrawlercmd(self, message: Message):
         """включить или выключить сборщик"""
